@@ -11,14 +11,14 @@ def require_folder(path)
   Dir[File.join(APP_PATH, path)].each{ |f| require File.expand_path(f) }
 end
 
-# First load self library files
+# First load self mandatory files
 require File.expand_path('../../lib/self/config', __FILE__)
 # Now we load configs
 require File.expand_path('../../config/application', __FILE__)
 require_folder 'lib/*.rb'
 require_folder 'app/controllers/*.rb'
 require_folder 'app/models/*.rb'
-# Load starter
-require File.expand_path('../../lib/self/start', __FILE__)
+# Load starter and other
+require_folder 'lib/self/*.rb'
 
-RubyTemplateApp::Application.start!
+RubyTemplateApp::Application.start!(OptParser.parse(ARGV))

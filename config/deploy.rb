@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-#require 'rvm/capistrano'
+require 'rvm/capistrano'
 require 'bundler/capistrano'
 
 set :stages,       %w[development production]
@@ -8,14 +8,7 @@ set :default_stage, 'development'
 
 require 'capistrano/ext/multistage'
 
-# since :deploy_server etc. is defined in another file (production.rb, etc),
-# we need to delay its assignment until they're loaded
-set(:user)         {user}
-
-set(:server_env)   {server_env}
-set(:server_port)  {server_port}
-set(:deploy_server){deploy_server}
-set(:deploy_to)    {deploy_to}
+# :user, :deploy_to etc. defined in other files (deploy/production.rb, etc)
 
 set :application,  'ruby_template'
 set :use_sudo,     false # (!)
@@ -37,10 +30,8 @@ ssh_options[:port] = 22
 default_run_options[:pty] = true
 set :default_shell, '/bin/bash -l'
 
-set(:rvm_ruby_string) {File.basename(ENV['GEM_HOME'])}
-set(:rvm_type)     {:system}
-set(:rvm_path)     {"/home/#{user}/.rvm"}
-set(:rvm_bin_path) {"/home/#{user}/.rvm/bin"}
+set (:rvm_ruby_string)   {:local}
+set (:rvm_autolibs_flag) {'read-only'}       # more info: rvm help autolibs
 
 set :keep_releases, 10
 
@@ -61,7 +52,7 @@ namespace :deploy do
   end
 end
 
-#before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby'
+before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby'
 
 task :ask_production_confirmation do
   set(:confirmed) do

@@ -2,13 +2,12 @@
 
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'eventmachine'
 
-gem 'bindata'
-
 group :db do
-  # Need libpq-dev! `sudo apt-get install libpq-dev`
-  gem 'pg', '>= 0.11.0'
+  gem 'sqlite3'
 end
 
 group :development do

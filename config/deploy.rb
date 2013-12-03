@@ -38,17 +38,17 @@ set :keep_releases, 10
 namespace :deploy do
   desc 'Start server'
   task :start do
-    run "script/server start -p #{server_port}"
+    run "cd #{deploy_to}/current && script/server start -p #{server_port}"
   end
 
   desc 'Stop server'
   task :stop do
-    run "script/server stop -p #{server_port}"
+    run "cd #{deploy_to}/current && script/server stop -p #{server_port}"
   end
 
   desc 'Restart server'
   task :restart do
-    run "script/server restart -p #{server_port}"
+    run "cd #{deploy_to}/current && script/server restart -p #{server_port}"
   end
 end
 

@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-set :user,          'kia84'
+set :user,          'asd'#'kia84'
 
 set :server_env,    'development'
 set :server_port,   '3000'
